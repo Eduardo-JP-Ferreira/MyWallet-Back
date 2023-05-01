@@ -12,6 +12,6 @@ operationRouter.post("/ope",validadeSchema(OperationObject), postOperation)
 
 operationRouter.get("/ope", getOperation)
 
-operationRouter.post("/home", postUser)
+operationRouter.get("/home", postUser)
 
 export default operationRouter
