@@ -1,6 +1,5 @@
 
-import { db } from "../app.js"
-import joi from "joi"
+import { db } from "../database/connection.js"
 import bcrypt from 'bcrypt';
 
 
@@ -12,16 +11,6 @@ export async function getSignUp(req, res) {
 
 export async function postSignUp(req, res){
     const {name, email, password} = req.body
-    const signUpObject = joi.object({
-        name: joi.string().required(),
-        email: joi.string().email().required(),
-        password: joi.string().min(3).required()
-      })
-    const validate = signUpObject.validate(req.body, { abortEarly: false })
-    if (validate.error) {
-        const errors = validate.error.details.map((detail) => detail.message);
-        return res.status(422).send(errors);
-      }
 
     const verifyEmail= await db.collection("users").findOne({ email: email })
     if(!verifyEmail){
