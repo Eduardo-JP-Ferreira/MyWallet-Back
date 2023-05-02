@@ -39,3 +39,14 @@ export async function getSessions(req, res) {
         .then((users) => res.status(200).send(users))
         .catch((err) => res.status(500).send(err.message))
 }
+
+export async function logout(req, res) {
+    const { token } = res.locals.session
+
+    try {
+        await db.collection("sessions").deleteOne({ token })
+        res.sendStatus(200)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+}
